@@ -1,5 +1,11 @@
 <?php
 
+function parentDirectory(string $actualDirectory): string {
+    $tmpPath = explode('\\', $actualDirectory);
+    unset($tmpPath[count($tmpPath)-1]);
+    return implode('\\', $tmpPath);
+}
+
 class Icon {
     private string $_image;
     private string $_type;
@@ -45,7 +51,7 @@ class FolderIcon extends Icon {
     public function __construct(bool $draw=false)
     {
         parent::setImage(
-            '<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 100 100" width="100px" height="100px"><path fill="#fef6aa" d="M14,84c22,0.2,41-0.2,63.2-0.2c3.5-2.2,5.8-8.1,5.8-12.5V30.4c0-1.4-1.1-2.5-2.5-2.5H53.5 c-1.4,0-2.5-1.1-2.5-2.5v-2.3c0-3.4-2.8-6.2-6.3-6.2H17.3c-3.4,0-6.3,2.9-6.3,6.4v6.5L11.1,78C11.1,83,12.3,84,14,84z"/><path fill="#1f212b" d="M15.5 32c-.3 0-.5-.2-.5-.5v-5c0-3.1 2.4-5.5 5.3-5.5h18.2c.3 0 .5.2.5.5S38.8 22 38.5 22H20.3C18 22 16 24 16 26.5v5C16 31.7 15.8 32 15.5 32zM46.5 27c-.3 0-.5-.2-.5-.5 0-2.5-2-4.5-4.3-4.5-.3 0-.5-.2-.5-.5s.2-.5.5-.5c2.9 0 5.3 2.5 5.3 5.5C47 26.8 46.8 27 46.5 27z"/><path fill="#f9e65c" d="M13.8,84h71.2c1.7,0,3.1-1.4,3.1-3.1V37H16v37.8C16,79.9,16.3,84,13.8,84z"/><path fill="#8f9eb6" d="M25.5 42.5H49.5V52.5H25.5z"/><path fill="#1f212b" d="M49.5,53h-24c-0.3,0-0.5-0.2-0.5-0.5v-10c0-0.3,0.2-0.5,0.5-0.5h24c0.3,0,0.5,0.2,0.5,0.5v10 C50,52.8,49.8,53,49.5,53z M26,52h23v-9H26V52z"/><path fill="#1f212b" d="M88,36h-4v-5.6c0-1.9-1.6-3.5-3.5-3.5H53.5c-0.8,0-1.5-0.7-1.5-1.5v-2.3c0-4-3.3-7.2-7.3-7.2H17.3 c-4,0-7.3,3.3-7.3,7.4L10.1,78c0,3.5,0.4,6.7,3.5,7c0,0,0.1,0,0.1,0H14c0.7,0,1.3,0,2,0v0h68.9c2.3,0,4.1-1.8,4.1-4.1V37 C89,36.4,88.6,36,88,36z M15,37v37.8l0,1.3c0,2.9,0,6-0.8,6.8C14.1,82.9,14,83,13.8,83c-0.7,0-1.7-0.5-1.7-5L12,29.8v-6.5 c0-3,2.4-5.4,5.3-5.4h27.5c2.9,0,5.3,2.3,5.3,5.2v2.3c0,1.9,1.6,3.5,3.5,3.5h27.1c0.8,0,1.5,0.7,1.5,1.5V36H16 C15.4,36,15,36.4,15,37z M87,80.9c0,1.1-0.9,2.1-2.1,2.1H16.4c0.6-1.6,0.6-4,0.6-7l0-38h70V80.9z"/></svg>'
+            '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-folder"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>'
         );
         parent::setType('folder');
     }
@@ -70,13 +76,42 @@ class DocumentIcon extends Icon {
     public function __construct(bool $draw=false)
     {
         parent::setImage(
-            '<svg xmlns="http://www.w3.org/2000/svg"  viewBox="0 0 100 100" width="100px" height="100px"><path fill="#fefdef" d="M29.614,12.307h-1.268c-4.803,0-8.732,3.93-8.732,8.732v61.535c0,4.803,3.93,8.732,8.732,8.732h43.535c4.803,0,8.732-3.93,8.732-8.732v-50.02C72.74,24.68,68.241,20.182,60.367,12.307H41.614"/><path fill="#1f212b" d="M71.882,92.307H28.347c-5.367,0-9.732-4.366-9.732-9.732V21.04c0-5.367,4.366-9.732,9.732-9.732h1.268c0.552,0,1,0.448,1,1s-0.448,1-1,1h-1.268c-4.264,0-7.732,3.469-7.732,7.732v61.535c0,4.264,3.469,7.732,7.732,7.732h43.535c4.264,0,7.732-3.469,7.732-7.732V32.969L59.953,13.307H41.614c-0.552,0-1-0.448-1-1s0.448-1,1-1h18.752c0.265,0,0.52,0.105,0.707,0.293l20.248,20.248c0.188,0.188,0.293,0.442,0.293,0.707v50.02C81.614,87.941,77.248,92.307,71.882,92.307z"/><path fill="#fef6aa" d="M60.114,12.807v10.986c0,4.958,4.057,9.014,9.014,9.014h11.986"/><path fill="#1f212b" d="M81.114 33.307H69.129c-5.247 0-9.515-4.268-9.515-9.515V12.807c0-.276.224-.5.5-.5s.5.224.5.5v10.985c0 4.695 3.82 8.515 8.515 8.515h11.985c.276 0 .5.224.5.5S81.391 33.307 81.114 33.307zM75.114 51.307c-.276 0-.5-.224-.5-.5v-3c0-.276.224-.5.5-.5s.5.224.5.5v3C75.614 51.083 75.391 51.307 75.114 51.307zM75.114 59.307c-.276 0-.5-.224-.5-.5v-6c0-.276.224-.5.5-.5s.5.224.5.5v6C75.614 59.083 75.391 59.307 75.114 59.307zM67.956 86.307H32.272c-4.223 0-7.658-3.45-7.658-7.689V25.955c0-2.549 1.264-4.931 3.382-6.371.228-.156.54-.095.695.132.155.229.096.54-.132.695-1.844 1.254-2.944 3.326-2.944 5.544v52.663c0 3.688 2.987 6.689 6.658 6.689h35.685c3.671 0 6.658-3.001 6.658-6.689V60.807c0-.276.224-.5.5-.5s.5.224.5.5v17.811C75.614 82.857 72.179 86.307 67.956 86.307z"/><path fill="#1f212b" d="M39.802 14.307l-.117 11.834c0 2.21-2.085 3.666-4.036 3.666-1.951 0-4.217-1.439-4.217-3.649l.037-12.58c0-1.307 1.607-2.451 2.801-2.451 1.194 0 2.345 1.149 2.345 2.456l.021 10.829c0 0-.083.667-1.005.645-.507-.012-1.145-.356-1.016-.906v-9.843h-.813l-.021 9.708c0 1.38.54 1.948 1.875 1.948s1.959-.714 1.959-2.094V13.665c0-2.271-1.36-3.5-3.436-3.5s-3.564 1.261-3.564 3.532l.032 12.11c0 3.04 2.123 4.906 4.968 4.906 2.845 0 5-1.71 5-4.75V14.307H39.802zM53.114 52.307h-23c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h23c.276 0 .5.224.5.5S53.391 52.307 53.114 52.307zM44.114 59.307h-14c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h14c.276 0 .5.224.5.5S44.391 59.307 44.114 59.307zM70.114 59.307h-24c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h24c.276 0 .5.224.5.5S70.391 59.307 70.114 59.307zM61.114 66.307h-11c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h11c.276 0 .5.224.5.5S61.391 66.307 61.114 66.307zM71.114 66.307h-8c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h8c.276 0 .5.224.5.5S71.391 66.307 71.114 66.307zM48.114 66.307h-18c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h18c.276 0 .5.224.5.5S48.391 66.307 48.114 66.307zM70.114 73.307h-13c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h13c.276 0 .5.224.5.5S70.391 73.307 70.114 73.307zM54.114 73.307h-24c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h24c.276 0 .5.224.5.5S54.391 73.307 54.114 73.307z"/></svg>'
+            '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>'
         );
         parent::setType('file');
     }
 
 }
 
+class SocialIcon extends Icon {
+    public function __construct(bool $draw=false)
+    {
+        parent::setImage(
+            '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-github"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>'
+        );
+        parent::setType('file');
+    }
+}
+
+class HomeIcon extends Icon {
+    public function __construct(bool $draw=false)
+    {
+        parent::setImage(
+            '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-home"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>'
+        );
+        parent::setType('button');
+    }
+}
+
+class ParentIcon extends Icon {
+    public function __construct(bool $draw=false)
+    {
+        parent::setImage(
+            '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-corner-up-left"><polyline points="9 14 4 9 9 4"></polyline><path d="M20 20v-7a4 4 0 0 0-4-4H4"></path></svg>'
+        );
+        parent::setType('button');
+    }
+}
 class Line {
 
     private string $line;
@@ -85,7 +120,12 @@ class Line {
     {
 
         $formId = 'form_'.$file;
-        $newPath = $path.'\\'.$file;
+
+        if ($file === '..') {
+            $newPath = parentDirectory($path);
+        } else {
+            $newPath = $path.'\\'.$file;
+        }      
 
         $this->line = '<li>';
         $this->line .= '<form id="'.$formId.'" method="POST" action="#">';
@@ -114,7 +154,7 @@ function filelist(string $actualPath=__DIR__) {
         if ($folderHandler = opendir($actualPath)) {
             $output = "<ul style='list-style: none'>";
             while (false !== ($file = readdir($folderHandler))) {
-                if (is_dir($file) === true) {
+                if (is_file($actualPath.'\\'.$file) === false) {
                     $icon = new FolderIcon();
                 } else {
                     $icon = new DocumentIcon();
@@ -135,7 +175,26 @@ function filelist(string $actualPath=__DIR__) {
     
 }
 
-$actualDirectory=__DIR__;
+$basePath = __DIR__;
+$actualDirectory= $_POST['newPath'] ?? $basePath;
+
+// Header creation.
+$iconGoHome = new HomeIcon();
+$iconGoParent = new ParentIcon();
+
+$goHomeLink = '<form id="goHomeForm" method="POST" action="#">';
+$goHomeLink .= '<input type="hidden" name="newPath" value="'.$basePath.'" />';
+$goHomeLink .= '<div class="itemLine" onClick="document.getElementById(\'goHomeForm\').submit();">';
+$goHomeLink .= $iconGoHome->draw(true);
+$goHomeLink .= '</div>';
+$goHomeLink .= '</form>';
+
+$goParentLink = '<form id="goParentForm" method="POST" action="#">';
+$goParentLink .= '<input type="hidden" name="newPath" value="'.parentDirectory($actualDirectory).'" />';
+$goParentLink .= '<div class="itemLine" onClick="document.getElementById(\'goParentForm\').submit();">';
+$goParentLink .= $iconGoParent->draw(true);
+$goParentLink .= '</div>';
+$goParentLink .= '</form>';
 
 ?>
 <!DOCTYPE html>
@@ -143,31 +202,49 @@ $actualDirectory=__DIR__;
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MyOwnCommander</title>
-    
-<style>
-    @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;500&display=swap');
+    <title>(<?php echo $actualDirectory; ?>) - MyOwnCommander 0.1</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;500&display=swap');
 
-    * {
-        font-family: "Roboto", sans-serif;
-    }
+        * {
+            font-family: "Roboto", sans-serif;
+        }
 
-    div.itemLine {
-        display: flex;
-        align-items: center;
-        text-decoration: none;
-    }
+        body {
+            margin: 0 1em;
+        }
 
-    a.itemLine svg {
-        height: 64px;
-    }
+        header {
+            position: -webkit-sticky;
+            position: sticky;
+            top: 0;
+            background-color: white;
+            height: 32px;
+            display: flex;
+            align-items: center;
+        }
 
-    span.itemCaption {
-        font-size: 18pt;
-    }
-</style>
+        div.itemLine {
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+
+        div.itemLine svg {
+            height: 64px;
+        }
+
+        span.itemCaption {
+            font-size: 18pt;
+        }
+    </style>
 </head>
 <body>
+<header>
+    <?php echo $goHomeLink; ?>
+    <?php echo $goParentLink; ?>
+    <span><?php echo $actualDirectory; ?></span>
+</header>
 <?php echo filelist($actualDirectory); ?>
 </body>
 </html>
