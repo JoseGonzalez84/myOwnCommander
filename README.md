@@ -11,9 +11,10 @@ Si te gusta, te parece una tontería, aberrante o genial, o simplemente quieres 
 
 Para realizar este software, se han utilizado las siguientes tecnologías:
 
-* **IDE**: Visual Studio Code
-* **Lenguajes**: PHP, HTML, CSS
+* **IDE**: Visual Studio Code 1.82
+* **Lenguajes**: PHP 8.2.4, HTML, CSS
 * **Control de Versiones**: Git, GitHub
+* **Iconos**: Feather Icons (https://feathericons.com/)
 
 ## 📜 Licencia
 Este software se entrega tal cual, no me hago responsable de todos los posibles problemas que puedan derivar del uso del mismo.
