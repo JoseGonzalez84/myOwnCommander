@@ -1,5 +1,4 @@
 <?php
-
 // Default definitions.
 define('ICON_TYPE_FOLDER', 'folder');
 define('ICON_TYPE_FILE', 'file');
@@ -11,6 +10,8 @@ define('ICON_TYPE_BACK', 'back');
 define('ICON_TYPE_ALERT', 'alert');
 define('ICON_TYPE_TRASH', 'trash');
 define('ICON_TYPE_GOUP', 'goup');
+define('ICON_TYPE_WATCH', 'watch');
+define('ICON_TYPE_DOWNLOAD', 'download');
 
 // Auxiliar functions.
 function parentDirectory(string $actualDirectory): string {
@@ -32,6 +33,8 @@ class Icon {
         ICON_TYPE_ALERT => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-alert-octagon"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"></polygon><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>',
         ICON_TYPE_TRASH => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-trash"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>',
         ICON_TYPE_GOUP => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevrons-up"><polyline points="17 11 12 6 7 11"></polyline><polyline points="17 18 12 13 7 18"></polyline></svg>',
+        ICON_TYPE_WATCH => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-eye"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>',
+        ICON_TYPE_DOWNLOAD => '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>',
     ];
 
     public function __construct(string $type)
@@ -79,15 +82,13 @@ class Line {
             $newPath = $path.'\\'.$file;
         }      
 
-        $this->line = '<li>';
-        $this->line .= '<form id="'.$formId.'" method="POST" action="#">';
+        $this->line = '<form id="'.$formId.'" method="POST" action="#">';
         $this->line .= '<input type="hidden" name="newPath" value="'.$newPath.'"/>';
         $this->line .= '<div class="itemLine" onClick="document.getElementById(\''.$formId.'\').submit();">';
         $this->line .= $icon->draw(true);
         $this->line .= "<span class=\"itemCaption\">{$file}</span>";
         $this->line .= '</div>';
         $this->line .= '</form>';
-        $this->line .= '</li>';
     }
 
     public function draw()
@@ -104,19 +105,24 @@ function messageToast(string $type, string $message) {
 function filelist(string $actualPath=__DIR__) {
     try {
         if ($folderHandler = opendir($actualPath)) {
-            $output = "<ul style='list-style: none'>";
+            $output = '<ul style="list-style: none">';
             while (false !== ($file = readdir($folderHandler))) {
-                if (is_file($actualPath.'\\'.$file) === false) {
-                    $icon = new Icon(ICON_TYPE_FOLDER);
-                } else {
-                    $icon = new Icon(ICON_TYPE_FILE);
+                // Don't show this information.
+                if ($file === '.' || $file === '..') {
+                    continue;
                 }
+                // Check if this is a file or folder (for behavior).
+                if (is_file($actualPath.'\\'.$file) === false) {
+                    $icon = ICON_TYPE_FOLDER;
+                } else {
+                    $icon = ICON_TYPE_FILE;
+                }
+
+                $line = new Line($file, $actualPath, new Icon($icon));
         
-                $lineaPrueba = new Line($file, $actualPath, $icon);
-        
-                $output .= $lineaPrueba->draw();
+                $output .= '<li>'.$line->draw().'</li>';
             }
-            $output .= "</ul>";
+            $output .= '</ul>';
             closedir($folderHandler);
         }
 
