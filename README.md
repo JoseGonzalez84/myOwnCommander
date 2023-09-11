@@ -13,17 +13,22 @@ Para realizar este software, se han utilizado las siguientes tecnologías:
 
 * **IDE**: Visual Studio Code 1.82
 * **Lenguajes**: PHP 8.2.4, HTML, CSS
+* **Framework CSS**: Bulma (https://bulma.io/)
 * **Control de Versiones**: Git, GitHub
-* **Iconos**: Feather Icons (https://feathericons.com/)
+* **Iconos**: Font Awesome (https://fontawesome.com/), Feather Icons (https://feathericons.com/)
 
 ## 📜 Licencia
 Este software se entrega tal cual, no me hago responsable de todos los posibles problemas que puedan derivar del uso del mismo.
 
 Asi mismo, el código está disponible para ser utilizado por quien quiera de la forma que quiera. Tan solo, si éste te ha sido de utilidad, me haría mucha ilusión que me lo comentaras 😃
 
-Realizado por José González Silva 👨‍💻, en tiempos de ocio personal 🕒 
+Realizado por José González Silva 👨‍💻, en tiempos de ocio personal 🕒
 
 ## 🚀 Evolución del software
+**v0.2.2** - 11.09.2023
+- Modificación visual notable.
+- Añadido framework CSS (Bulma) y modificados iconos (Font Awesome).
+
 **v0.2.1** - 10.09.2023
 - Añadido el README.md
 - Cambiado el sistema de gestion de iconos.
