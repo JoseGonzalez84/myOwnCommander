@@ -25,6 +25,11 @@ Asi mismo, el código está disponible para ser utilizado por quien quiera de la
 Realizado por José González Silva 👨‍💻, en tiempos de ocio personal 🕒
 
 ## 🚀 Evolución del software
+**v0.2.3** - 24.09.2023
+- Se modifica la estructura del proyecto. Uso de namespaces.
+- Se añade jQuery. Voy a incluir JavaScript al proyecto (el core seguirá siendo PHP).
+- El producto NO está funcionando en este punto.
+
 **v0.2.2** - 11.09.2023
 - Modificación visual notable.
 - Añadido framework CSS (Bulma) y modificados iconos (Font Awesome).
