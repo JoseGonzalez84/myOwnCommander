@@ -38,6 +38,8 @@ class Functions
                     if (is_file($actualPath.'\\'.$file) === false) {
                         $icon = ICON_TYPE_FOLDER;
                     } else {
+                        $mime = mime_content_type($actualPath.'\\'.$file);
+                        var_dump($mime);
                         $icon = ICON_TYPE_FILE;
                     }
 

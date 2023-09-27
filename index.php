@@ -1,7 +1,14 @@
 <?php
-use myOwnCommander\Source\Icon;
-use myOwnCommander\Source\Line;
-use myOwnCommander\Source\Functions;
+/**
+ * 
+ */
+require 'src\Icon.class.php';
+require 'src\Line.class.php';
+require 'src\Functions.class.php';
+
+use \myOwnCommander\Source\Icon;
+use \myOwnCommander\Source\Line;
+use \myOwnCommander\Source\Functions;
 
 // Default definitions.
 $basePath = __DIR__;
@@ -45,116 +52,35 @@ $goConfigLink .= '</form>';
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;500&display=swap');
         @import "https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css";
-
-        * {
-            font-family: "Roboto", sans-serif;
-        }
-
-        body {
-            margin: 0 1em;
-        }
-
-        .pa-05em {
-            padding: 0 .5em;
-        }
-
-        .panel-heading i {
-            padding: 0 0.2em;
-            width: 32px;
-            align-self: center;
-            cursor: pointer;
-        }
-
-        .selectable {
-            cursor: pointer;
-        }
-
-        input#pathFile {
-            width: 100%;
-            height: 32px;
-            font-size: 15pt;
-            font-weight: 500;
-            background-color: transparent;
-            border: 0;
-        }
-
-        .panel {
-            margin-top: 1rem;
-        }
-
-        .panel-heading {
-            display:flex;
-        }
-
-        .panel-heading div {
-            align-self: center;
-        }
-
-        #goToPath {
-            width: 100%;
-        }
-
-        header {
-            position: -webkit-sticky;
-            position: sticky;
-            top: 0;
-            background-color: white;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            margin: 1em 0;
-        }
-
-        header > div {
-            padding: 5px;
-        }
-
-        div.itemLine {
-            display: flex;
-            align-items: center;
-            text-decoration: none;
-        }
-
-        div.itemLine svg {
-            height: 64px;
-        }
-
-        span.itemCaption {
-            font-size: 18pt;
-        }
-
-        ul.fileList {
-            list-style: none;
-            padding-left: 1em;
-        }
-
-        ul.fileList .itemLine svg {
-            margin-right: 1em;
-        }
+        @import "resources/styles.css";
     </style>
 </head>
 <body>
-<nav class="panel">
-  <div class="panel-heading">
-    <?php echo $goHomeLink; ?>
-    <?php echo $goParentLink; ?>
-    <?php echo $goToPathLink; ?>
-    <?php echo $goConfigLink; ?>
+    <nav class="panel">
+    <div class="panel-heading">
+        <?php echo $goHomeLink; ?>
+        <?php echo $goParentLink; ?>
+        <?php echo $goToPathLink; ?>
+        <?php echo $goConfigLink; ?>
+        </div>
+    <div class="panel-block">
+        <p class="control has-icons-left">
+        <input class="input" type="text" placeholder="Buscar...">
+        <span class="icon is-left">
+            <i class="fas fa-search" aria-hidden="true"></i>
+        </span>
+        </p>
     </div>
-  <div class="panel-block">
-    <p class="control has-icons-left">
-      <input class="input" type="text" placeholder="Buscar...">
-      <span class="icon is-left">
-        <i class="fas fa-search" aria-hidden="true"></i>
-      </span>
-    </p>
-  </div>
-  <?php echo Functions::filelist($actualDirectory); ?>
-</nav>
-
-
-
-
-
+    <div class="panel-ficheros">
+        <div class="panel-lista">
+        <?php echo Functions::filelist($actualDirectory); ?>
+        </div>
+        <div class="panel-visor">
+            <div>
+                <textarea name="fileVisor" id="fileVisor"></textarea>
+            </div>
+        </div>
+    </div>
+    </nav>
 </body>
 </html>

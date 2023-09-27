@@ -1,8 +1,8 @@
 <?php
 namespace myOwnCommander\Source;
 
-use myOwnCommander\Sources\Functions;
-use myOwnCommander\Sources\Icon;
+use myOwnCommander\Source\Functions;
+use myOwnCommander\Source\Icon;
 
 /**
  * Class Line.
