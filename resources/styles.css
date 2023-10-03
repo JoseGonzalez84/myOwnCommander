@@ -97,3 +97,16 @@ ul.fileList .itemLine svg {
     min-width: 50%;
     flex: 1 1 auto;
 }
+
+.panel-ficheros .panel-visor div {
+    margin: 1rem;
+    flex: 1 1 auto;
+}
+
+.panel-visor #fileVisor {
+    border: none;
+    width: 80%;
+    height: 100%;
+    font-family: monospace;
+    width: 100%;
+}

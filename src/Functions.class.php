@@ -36,14 +36,13 @@ class Functions
                     }
                     // Check if this is a file or folder (for behavior).
                     if (is_file($actualPath.'\\'.$file) === false) {
-                        $icon = ICON_TYPE_FOLDER;
+                        $type = ICON_TYPE_FOLDER;
                     } else {
-                        $mime = mime_content_type($actualPath.'\\'.$file);
-                        var_dump($mime);
-                        $icon = ICON_TYPE_FILE;
+                        //$mime = mime_content_type($actualPath.'\\'.$file);
+                        $type = ICON_TYPE_FILE;
                     }
 
-                    $line = new Line($file, $actualPath, new Icon($icon));
+                    $line = new Line($file, $actualPath, $type);
                     $output .= $line->draw();
                 }
                 //$output .= '</ul>';

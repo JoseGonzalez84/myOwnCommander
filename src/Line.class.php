@@ -17,25 +17,34 @@ class Line
      *
      * @param string $file File.
      * @param string $path Path of the file.
-     * @param Icon   $icon Icon for show.
+     * @param string $type Type of line.
      */
-    public function __construct(string $file, string $path, Icon $icon)
+    public function __construct(string $file, string $path, string $type)
     {
 
         $formId = 'form_'.$file;
+        $icon = new Icon($type);
 
-        if ($file === '..') {
-            $newPath = Functions::parentDirectory($path);
+        if ($type === ICON_TYPE_FOLDER) {
+            $hiddenName = 'newPath';
+            $hiddenValue = $path.'\\'.$file;
         } else {
-            $newPath = $path.'\\'.$file;
+            $hiddenName = 'openFile';
+            $hiddenValue = json_encode(
+                [
+                    'fileName' => $file,
+                    'filePath' => $path
+                ]
+            );
         }
+
 
         $this->_line = '<a class="panel-block" onClick="document.getElementById(\''.$formId.'\').submit();">';
         $this->_line .= '<span class="panel-icon"><i class="'.$icon->draw(true).'"></i></span>';
         $this->_line .= $file;
         $this->_line .= '</a>';
         $this->_line .= '<form id="'.$formId.'" method="POST" action="#">';
-        $this->_line .= '<input type="hidden" name="newPath" value="'.$newPath.'"/>';
+        $this->_line .= '<input type=\'hidden\' name=\''.$hiddenName.'\' value=\''.$hiddenValue.'\'/>';
         $this->_line .= '</form>';
     }
 

@@ -4,15 +4,27 @@
  */
 require 'src\Icon.class.php';
 require 'src\Line.class.php';
+require 'src\Visor.class.php';
 require 'src\Functions.class.php';
 
 use \myOwnCommander\Source\Icon;
 use \myOwnCommander\Source\Line;
+use \myOwnCommander\Source\Visor;
 use \myOwnCommander\Source\Functions;
 
 // Default definitions.
 $basePath = __DIR__;
-$actualDirectory= $_POST['newPath'] ?? $basePath;
+$fileContent = '';
+$actualDirectory = $basePath;
+$visor = new Visor();
+if (isset($_POST['newPath']) === true) {
+    $actualDirectory = $_POST['newPath'] ?? $basePath;
+} else if (isset($_POST['openFile']) === true) {
+    $fileInfo = json_decode($_POST['openFile']);
+    $actualDirectory = $fileInfo->filePath;
+    $fileToOpen = $fileInfo->filePath.'\\'.$fileInfo->fileName;
+    $visor->setFile($fileToOpen);
+}
 
 // Header creation.
 $iconGoHome = new Icon(ICON_TYPE_HOME);
@@ -75,11 +87,13 @@ $goConfigLink .= '</form>';
         <div class="panel-lista">
         <?php echo Functions::filelist($actualDirectory); ?>
         </div>
+        <?php if ($visor->hasContent() === true) : ?>
         <div class="panel-visor">
             <div>
-                <textarea name="fileVisor" id="fileVisor"></textarea>
+                <?php echo $visor->draw(); ?>
             </div>
         </div>
+        <?php endif; ?>
     </div>
     </nav>
 </body>
