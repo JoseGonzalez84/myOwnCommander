@@ -103,10 +103,23 @@ ul.fileList .itemLine svg {
     flex: 1 1 auto;
 }
 
-.panel-visor #fileVisor {
+.panel-visor textarea#fileVisor {
     border: none;
-    width: 80%;
-    height: 100%;
-    font-family: monospace;
     width: 100%;
+    min-height: 260px;
+    font-family: monospace;
+    resize: none;
+}
+
+.panel-visor img#fileVisor {
+    width: 50%;
+}
+
+.panel-icon-name {
+    flex: 1 1;
+    display: flex;
+}
+
+.panel-action-buttons {
+    display: flex;
 }

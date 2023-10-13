@@ -39,9 +39,15 @@ class Line
         }
 
 
-        $this->_line = '<a class="panel-block" onClick="document.getElementById(\''.$formId.'\').submit();">';
+        $this->_line = '<a class="panel-block">';
+        $this->_line .= '<div class="panel-icon-name">';
         $this->_line .= '<span class="panel-icon"><i class="'.$icon->draw(true).'"></i></span>';
-        $this->_line .= $file;
+        $this->_line .= '<span class="panel-icon" onClick="document.getElementById(\''.$formId.'\').submit();">'.$file.'</span>';
+        $this->_line .= '</div>';
+        $this->_line .= '<div class="panel-action-buttons">';
+        $this->_line .= '<span class="panel-icon"><i class="fa-solid fa-eye"></i></span>';
+        $this->_line .= '<span class="panel-icon"><i class="fa-solid fa-trash"></i></span>';
+        $this->_line .= '</div>';
         $this->_line .= '</a>';
         $this->_line .= '<form id="'.$formId.'" method="POST" action="#">';
         $this->_line .= '<input type=\'hidden\' name=\''.$hiddenName.'\' value=\''.$hiddenValue.'\'/>';

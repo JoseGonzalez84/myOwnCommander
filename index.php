@@ -5,12 +5,14 @@
 require 'src\Icon.class.php';
 require 'src\Line.class.php';
 require 'src\Visor.class.php';
+require 'src\ActionButton.class.php';
 require 'src\Functions.class.php';
 
 use \myOwnCommander\Source\Icon;
 use \myOwnCommander\Source\Line;
 use \myOwnCommander\Source\Visor;
 use \myOwnCommander\Source\Functions;
+use \myOwnCommander\Source\ActionButton;
 
 // Default definitions.
 $basePath = __DIR__;
@@ -25,17 +27,42 @@ if (isset($_POST['newPath']) === true) {
     $fileToOpen = $fileInfo->filePath.'\\'.$fileInfo->fileName;
     $visor->setFile($fileToOpen);
 }
-
+var_dump($actualDirectory);
 // Header creation.
 $iconGoHome = new Icon(ICON_TYPE_HOME);
 $iconGoParent = new Icon(ICON_TYPE_PARENT);
 $iconGoToPath = new Icon(ICON_TYPE_LOCATION);
 $iconConfiguration = new Icon(ICON_TYPE_COG);
 
-$goHomeLink = '<div onClick="document.getElementById(\'goHomeForm\').submit();" class="selectable '.$iconGoHome->draw(true).'"></div>';
-$goHomeLink .= '<form id="goHomeForm" method="POST" action="#">';
-$goHomeLink .= '<input type="hidden" name="newPath" value="'.$basePath.'" />';
-$goHomeLink .= '</form>';
+$goHomeLink = new ActionButton(
+    new Icon(ICON_TYPE_HOME),
+    'goHome',
+    [
+        [
+            'type' => 'hidden',
+            'name' => 'newPath',
+            'value' => $basePath,
+        ]
+    ]
+);
+
+$goParentLink = new ActionButton(
+    new Icon(ICON_TYPE_PARENT),
+    'goParent',
+    [
+        [
+            'type'  => 'hidden',
+            'name'  => 'newPath',
+            'value' => Functions::parentDirectory($actualDirectory)
+        ]
+    ]
+)
+
+/*
+$goHomeLink2 = '<div onClick="document.getElementById(\'goHomeForm2\').submit();" class="selectable '.$iconGoHome->draw(true).'"></div>';
+$goHomeLink2 .= '<form id="goHomeForm2" method="POST" action="#">';
+$goHomeLink2 .= '<input type="hidden" name="newPath" value="'.$basePath.'" />';
+$goHomeLink2 .= '</form>';
 
 $goParentLink = '<div onClick="document.getElementById(\'goParentForm\').submit();" style="padding:0 0.5em;" class="selectable '.$iconGoParent->draw(true).'"></div>';
 $goParentLink .= '<form id="goParentForm" method="POST" action="#">';
@@ -51,7 +78,7 @@ $goConfigLink = '<div onClick="document.getElementById(\'goConfiguration\').subm
 $goConfigLink .= '<form id="goConfiguration" method="POST" action="#">';
 $goConfigLink .= '<input type="hidden" name="configuration" value="1" />';
 $goConfigLink .= '</form>';
-
+*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -70,10 +97,10 @@ $goConfigLink .= '</form>';
 <body>
     <nav class="panel">
     <div class="panel-heading">
-        <?php echo $goHomeLink; ?>
-        <?php echo $goParentLink; ?>
-        <?php echo $goToPathLink; ?>
-        <?php echo $goConfigLink; ?>
+        <?php $goHomeLink->draw(); ?>
+        <?php $goParentLink->draw(); ?>
+        <?php //$goToPathLink; ?>
+        <?php //$goConfigLink; ?>
         </div>
     <div class="panel-block">
         <p class="control has-icons-left">

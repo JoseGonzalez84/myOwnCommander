@@ -24,10 +24,11 @@ class Visor
         $fileMime = mime_content_type($this->_file);
         if (strchr($fileMime, '/', true) === 'text') {
             $fileContent = file_get_contents($this->_file);
-            $this->_visorContent = '<textarea name="fileVisor" id="fileVisor">'.$fileContent.'</textarea>';
-        } else if (strchr($fileMime, '/', true) === 'text') {
-            $fileContent = file_get_contents($this->_file);
-            $this->_visorContent = '<textarea name="fileVisor" id="fileVisor">'.$fileContent.'</textarea>';
+            $this->_visorContent = '<textarea name="fileVisor" id="fileVisor">'.htmlentities($fileContent).'</textarea>';
+        } else if (strchr($fileMime, '/', true) === 'image') {
+            $fileContent = base64_encode(file_get_contents($this->_file));
+            $src = 'data: '.$fileMime.';base64,'.$fileContent;
+            $this->_visorContent = '<img id="fileVisor" src="'.$src.'" />';
         } else {
             $fileContent = "Aun no se pueden abrir ficheros {$fileMime}";
             $this->_visorContent = '<textarea name="fileVisor" id="fileVisor">'.$fileContent.'</textarea>';
